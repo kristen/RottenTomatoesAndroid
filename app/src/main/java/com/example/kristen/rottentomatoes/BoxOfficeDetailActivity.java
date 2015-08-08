@@ -37,7 +37,7 @@ public class BoxOfficeDetailActivity extends Activity {
     }
 
     public void loadMovie(BoxOfficeMovie movie) {
-        tvTitle.setText(movie.getTitle());
+        tvTitle.setText(movie.getTitle() + " (" + movie.getYear() + ")");
         tvCriticsScore.setText(Html.fromHtml("<b>Critics Score:</b> " + movie.getCriticsScore() + "%"));
         tvAudienceScore.setText(Html.fromHtml("<b>Audience Score:</b> " + movie.getAudienceScore() + "%"));
         tvCast.setText(movie.getCastList());

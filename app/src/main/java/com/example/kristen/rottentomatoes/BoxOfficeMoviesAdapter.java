@@ -34,7 +34,7 @@ public class BoxOfficeMoviesAdapter extends ArrayAdapter<BoxOfficeMovie> {
         TextView tvCast = (TextView) convertView.findViewById(R.id.tvCast);
         ImageView ivPosterImage = (ImageView) convertView.findViewById(R.id.ivPosterImage);
 
-        tvTitle.setText(movie.getTitle());
+        tvTitle.setText(movie.getTitle() + " (" + movie.getYear() + ")");
         tvCriticsScore.setText("Score: " + movie.getCriticsScore() + "%");
         tvCast.setText(movie.getCastList());
         Picasso.with(getContext()).load(movie.getPosterUrl()).into(ivPosterImage);
