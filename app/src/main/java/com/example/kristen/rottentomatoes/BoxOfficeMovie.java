@@ -65,4 +65,25 @@ public class BoxOfficeMovie {
 
         return b;
     }
+
+    public static ArrayList<BoxOfficeMovie> fromJson(JSONArray jsonArray) {
+        ArrayList<BoxOfficeMovie> movies = new ArrayList<>(jsonArray.length());
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject moviesJson = null;
+            try {
+                moviesJson = jsonArray.getJSONObject(i);
+            } catch (Exception e) {
+                e.printStackTrace();
+                continue;
+            }
+
+            BoxOfficeMovie movie = BoxOfficeMovie.fromJson(moviesJson);
+            if (movie != null) {
+                movies.add(movie);
+            }
+        }
+
+        return movies;
+    }
 }
