@@ -6,18 +6,22 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by kristen on 8/8/15.
  */
-public class BoxOfficeMovie {
+public class BoxOfficeMovie implements Serializable {
+    private static final long serialVersionUID = -8959832007991513854L;
     private String title;
     private int year;
     private String synopsis;
     private String posterUrl;
     private int criticsScore;
     private ArrayList<String> castList;
+    private String criticsConsensus;
+    private int audienceScore;
 
     public String getTitle() {
         return title;
@@ -32,7 +36,14 @@ public class BoxOfficeMovie {
     }
 
     public String getPosterUrl() {
+        // http://resizing.flixster.com/gbCU2qc5Edq9j-eJWBL9VN0BmZA=/52x81/dkpu1ddg7pbsk.cloudfront.net/movie/11/19/07/11190760_ori.jpg
         return posterUrl;
+    }
+
+    public String getLargePosterUrl() {
+        // http://content6.flixster.com/movie/11/19/07/11190760_ori.jpg
+        int movie = posterUrl.indexOf("/movie");
+        return "http://content6.flixster.com" + posterUrl.substring(movie, posterUrl.length());
     }
 
     public int getCriticsScore() {
@@ -43,6 +54,14 @@ public class BoxOfficeMovie {
         return TextUtils.join(", ", castList);
     }
 
+    public String getCriticsConsensus() {
+        return criticsConsensus;
+    }
+
+    public int getAudienceScore() {
+        return audienceScore;
+    }
+
     public static BoxOfficeMovie fromJson(JSONObject jsonObject) {
         BoxOfficeMovie b = new BoxOfficeMovie();
         try {
@@ -51,6 +70,8 @@ public class BoxOfficeMovie {
             b.synopsis = jsonObject.getString("synopsis");
             b.posterUrl = jsonObject.getJSONObject("posters").getString("thumbnail");
             b.criticsScore = jsonObject.getJSONObject("ratings").getInt("critics_score");
+            b.criticsConsensus = jsonObject.getString("critics_consensus");
+            b.audienceScore = jsonObject.getJSONObject("ratings").getInt("audience_score");
 
             b.castList = new ArrayList<>();
             JSONArray abridgedCast = jsonObject.getJSONArray("abridged_cast");
